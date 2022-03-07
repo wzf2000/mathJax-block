@@ -1,4 +1,16 @@
 (function (wp) {
+    function escape2Html(str) {
+        var arrEntities = {
+            'lt': '<',
+            'gt': '>',
+            'nbsp': ' ',
+            'amp': '&',
+            'quot': '"'
+        };
+        return str.replace(/&(lt|gt|nbsp|amp|quot);/ig, function(all, t) {
+            return arrEntities[t];
+        });
+    }
     wp.blocks.registerBlockType('mathjax-block/mathjax-display', {
         apiversion: 2,
         title: 'mathJax行间公式',
@@ -22,8 +34,8 @@
             var blockProps = wp.blockEditor.useBlockProps({
                 className: 'mathjax-display-block'
             });
-            let content = props.attributes.content;
-            let math_content = props.attributes.math_content;
+            let content = escape2Html(props.attributes.content);
+            let math_content = escape2Html(props.attributes.math_content);
             function setContent( event ) {
                 props.setAttributes({
                     content: event.target.value,
@@ -69,8 +81,9 @@
         },
         save: function (props) {
             var blockProps = wp.blockEditor.useBlockProps.save();
-            let content = props.attributes.content;
-            let math_content = props.attributes.math_content;
+            let content = escape2Html(props.attributes.content);
+            let math_content = escape2Html(props.attributes.math_content);
+            console.log(content);
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
             return wp.element.createElement(
                 'div',
