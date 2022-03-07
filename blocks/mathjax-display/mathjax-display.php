@@ -29,7 +29,7 @@ if ( ! class_exists('mathJax_display_block') ) :
                     zoom: "Hover"
                 }
             });');
-            wp_enqueue_script('MathJax', 'https://uoj.ac/js/MathJax-2.7.9/MathJax.js?config=TeX-AMS_HTML');
+            wp_enqueue_script('MathJax', 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS_HTML');
             wp_enqueue_script(
                 'mathjax-display', 
                 plugins_url('index.js', __FILE__), 
