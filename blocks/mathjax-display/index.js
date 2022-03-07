@@ -28,14 +28,26 @@
                 type: 'string',
                 source: 'html',
                 selector: 'span.mathjax-display-block-show'
+            },
+            cover: {
+                type: 'string',
+                source: 'attribute',
+                selector: 'img',
+                attribute: 'src'
+            }
+        },
+        example: {
+            attributes: {
+                cover: MD_URL + 'preview.png'
             }
         },
         edit: function (props) {
             var blockProps = wp.blockEditor.useBlockProps({
                 className: 'mathjax-display-block'
             });
-            let content = escape2Html(props.attributes.content);
-            let math_content = escape2Html(props.attributes.math_content);
+            let content = props.attributes.content ? escape2Html(props.attributes.content) : "";
+            let math_content = props.attributes.math_content ? escape2Html(props.attributes.math_content) : "$$$$";
+            let cover = props.attributes.cover;
             function setContent( event ) {
                 props.setAttributes({
                     content: event.target.value,
@@ -76,7 +88,10 @@
                 Object.assign(blockProps, {
                     style: {}
                 }),
-                [textArea, display]
+                typeof cover !== 'undefined' ? wp.element.createElement(
+                    'img',
+                    { className: 'mathjax-display-block-cover', src: cover }
+                ) : [textArea, display]
             );
         },
         save: function (props) {

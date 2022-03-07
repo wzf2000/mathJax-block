@@ -41,6 +41,7 @@ if ( ! class_exists('mathJax_display_block') ) :
                     'wp-rich-text' 
                 )
             );
+            @wp_localize_script('mathjax-display', 'MD_URL', plugin_dir_url(__FILE__));
         }
         
         public function render_block( $attributes, $content ) {
